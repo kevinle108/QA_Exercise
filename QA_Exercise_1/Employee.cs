@@ -6,41 +6,42 @@ using System.Threading.Tasks;
 
 namespace QA_Exercise_1
 {
-    internal class Employee
+    public class Employee
     {
-        string name;
-        DateTime bday;
-        decimal salary;
+        string _name;
+        DateTime _bday;
+        decimal _salary;
 
-        public Employee(string name, DateTime bday, decimal salary)
+        public string Name { get => _name; set => _name = value; }
+        public DateTime Bday { get => _bday; set => _bday = value; }
+        public decimal Salary { get => _salary; set => _salary = value; }        
+
+        public Employee(string name, string bday, string salary)
         {
-            this.name = name;
-            this.bday = bday;
-            this.salary = salary;
+            this.Name = name;
+            this.Bday = DateTime.Parse(bday);
+            this._salary = decimal.Parse(salary);
         }
 
-        public void PrintGreeting()
+        public string Greeting()
         {
-            string formattedName = name;
-            string formattedSalary = salary.ToString("N");
-            string formattedBday = bday.Date.ToShortDateString();
-            Console.WriteLine($"Welcome to the company, {formattedName}! Your salary is ${formattedSalary} and your birthday is {formattedBday}.");
+            string formattedName = Name;
+            string formattedSalary = _salary.ToString("N");
+            string formattedBday = Bday.Date.ToShortDateString();
+            return $"Welcome to the company, {formattedName}! Your salary is ${formattedSalary} and your birthday is {formattedBday}.";
         }
 
-        public void PrintDaysUntilBday()
+        public int DaysUntilBday()
         {
             DateTime today = DateTime.Today;
-            DateTime nextBday = new DateTime(today.Year, bday.Month, bday.Day);
+            DateTime nextBday = new DateTime(today.Year, Bday.Month, Bday.Day);
 
             if (nextBday < today)
-                nextBday = new DateTime(today.Year + 1, bday.Month, bday.Day);
+                nextBday = new DateTime(today.Year + 1, Bday.Month, Bday.Day);
 
             int daysUntil = (nextBday - today).Days;
 
-            if (daysUntil == 0)
-                Console.WriteLine("Today is your birthday, Happy Birthday!!!");
-            else
-                Console.WriteLine($"Your birthday will be in {daysUntil} days!");
+            return daysUntil;
         }
     }
 }

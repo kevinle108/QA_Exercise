@@ -17,10 +17,10 @@ using QA_Exercise_1;
 Console.WriteLine("Welcome to your new job!");
 
 // variables for storing user inputs
-var input = "";
+string input = "";
 string name = "";
-DateTime bday = DateTime.Now;
-decimal salary = 0.0m;
+string bday = "";
+string salary = "";
 
 // gather necessary inputs to create Employee object
 Console.WriteLine("What is your name?");
@@ -29,14 +29,18 @@ name = input;
 
 Console.WriteLine("What is your birthday? (Month-Day-Year)");
 input = Console.ReadLine();
-bday = DateTime.Parse(input);
+bday = input;
 
 
 Console.WriteLine("What is your salary?");
 input = Console.ReadLine();
-salary = decimal.Parse(input);
+salary = input;
 
 // create Employee instance and print out greeting
 Employee employee = new Employee(name, bday, salary);
-employee.PrintGreeting();
-employee.PrintDaysUntilBday();
+Console.WriteLine(employee.Greeting());
+int daysUntil = employee.DaysUntilBday();
+if (daysUntil == 0)
+    Console.WriteLine("Today is your birthday, Happy Birthday!!!");
+else
+    Console.WriteLine($"Your birthday will be in {daysUntil} days!");
