@@ -28,54 +28,129 @@ You can reuse the birthday logic from part 1 in this calculation.
 
 
 using QA_Exercise_1;
+using System.Linq; 
+
 // variables for storing user inputs
 string input = "";
 string name = "";
 string bday = "";
 string salary = "";
-bool correctBdayInput = false;
+List<Employee> employees = new List<Employee>();
+
+while (input != "x")
+{
+    ShowMenu();
+    input = Console.ReadLine();
+    switch (input)
+    {
+        case "1":
+            AddEmployee();
+            ClearConsole();
+            break;
+        case "2":
+            PrintAllEmployees();
+            ClearConsole();
+            break;
+        case"3":
+            RemoveEmployee();
+            ClearConsole();
+            break;
+        default:
+            break;
+    }
+}
 
 
-Console.WriteLine(@"Welcome to the program. Please choose from the following menu options:
+void ShowMenu()
+{
+    Console.Clear();
+    Console.WriteLine(@"
+Welcome to the program. Please choose from the following menu options:
 [1] Add an employee
 [2] View all current employees
 [3] Remove an employee by name
-");
-input = Console.ReadLine();
-
-
-
-Console.WriteLine("Welcome to your new job!");
-
-
-
-// gather necessary inputs to create Employee object
-Console.WriteLine("What is your name?");
-input = Console.ReadLine();
-name = input;
-
-
-
-Console.WriteLine("What is your birthday? (Month-Day-Year)");
-input = Console.ReadLine();
-DateTime birthday;
-while (!DateTime.TryParse(input, out birthday))
-{
-    Console.WriteLine("Invalid birthday, please try again");
-    input = Console.ReadLine();
+[x] Exit
+    ");
 }
-bday = birthday.ToShortDateString();
 
-// TODO: input validation for salary 
-Console.WriteLine("What is your salary?");
-input = Console.ReadLine();
-salary = input;
+void ClearConsole()
+{
+    Console.Write("\nPress any key to continue: ");
+    Console.Read();
+    Console.Clear();
+}
 
-// create Employee instance and print out greeting
-Employee employee = new Employee(name, bday, salary);
-Console.WriteLine(employee.Greeting());
-int daysUntil = employee.DaysUntilBday();
-if (daysUntil == 0)
-    Console.WriteLine("Today is your birthday, Happy Birthday!!!");
-else
-    Console.WriteLine($"Your birthday will be in {daysUntil} days!");
+
+void AddEmployee()
+{  
+    Console.WriteLine("Welcome to your new job!");
+
+    // gather necessary inputs to create Employee object
+    Console.WriteLine("What is your name?");
+    input = Console.ReadLine();
+    name = input;
+
+    Console.WriteLine("What is your birthday? (Month-Day-Year)");
+    input = Console.ReadLine();
+    DateTime birthday;
+    while (!DateTime.TryParse(input, out birthday))
+    {
+        Console.WriteLine("Invalid birthday, please try again");
+        input = Console.ReadLine();
+    }
+    bday = birthday.ToShortDateString();
+
+    // TODO: input validation for salary 
+    Console.WriteLine("What is your salary?");
+    input = Console.ReadLine();
+    salary = input;
+
+    // create Employee instance and print out greeting
+    Employee employee = new Employee(name, bday, salary);
+    Console.WriteLine(employee.Greeting());
+    int daysUntil = employee.DaysUntilBday();
+    if (daysUntil == 0)
+        Console.WriteLine("Today is your birthday, Happy Birthday!!!");
+    else
+        Console.WriteLine($"Your birthday will be in {daysUntil} days!");
+    employees.Add(employee);
+}
+
+void PrintAllEmployees()
+{
+    if (employees.Count == 0)
+    {
+        Console.WriteLine("No employees to display!");
+    }
+    else 
+    {
+        foreach (Employee employee in employees)
+        {
+            employee.PrintInfo();
+        }
+    }
+}
+
+void RemoveEmployee()
+{
+    string name;
+    Console.WriteLine("Please enter the name of the employee you wish to remove:");
+    foreach (Employee emp in employees)
+    {
+        Console.WriteLine(emp.Name);
+    }
+    Console.WriteLine();
+    name = Console.ReadLine();
+    int index = employees.FindIndex(a => a.Name == name);
+    if (index == -1)
+    {
+        Console.WriteLine("Employee not found!");
+    }
+    else
+    {
+        employees.RemoveAt(index);
+        Console.WriteLine($"Employee w/ name {name} has been removed.");
+    }
+
+    
+}

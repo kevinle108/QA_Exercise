@@ -43,5 +43,10 @@ namespace QA_Exercise_1
 
             return daysUntil;
         }
+
+        public void PrintInfo()
+        {
+            Console.WriteLine($"Employee {_name} makes ${_salary.ToString("N")} and was born on {Bday.Date.ToShortDateString()}. It is {DaysUntilBday()} days until their next birthday.");
+        }
     }
 }
