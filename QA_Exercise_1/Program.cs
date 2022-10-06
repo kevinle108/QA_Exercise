@@ -150,7 +150,5 @@ void RemoveEmployee()
     {
         employees.RemoveAt(index);
         Console.WriteLine($"Employee w/ name {name} has been removed.");
-    }
-
-    
+    }    
 }
